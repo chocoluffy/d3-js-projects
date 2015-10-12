@@ -5,7 +5,41 @@
 	<title>Document</title>
 	<script type="text/javascript" src="d3.js"></script>
 </head>
+<style>
+	div.bar{
+		/*override this part*/
+		width: 10px; 
+		height: 20px;
+		/*override this part*/
+		background-color: red;
+	}
+</style>
 <body>
-	
+	<!-- 用来动态的生成多个elements -->
+	<script type="text/javascript">
+		// use selectAll to select multiple elements.
+		var dataset = Array.apply(null, Array(40)).map(function (_, i) {return i*5;});; 
+		
+		d3.select("body")
+		.selectAll("p") //return a empty selection
+		.data(dataset) //counts and parse the data. Since there are five values in list, so everything after this point will be repeted five times, once for each value.
+		.enter() // to create new, data-bound elements. using the data being handed to it. if there are more data than existing DOM elements, then enter() create a new placeholder element! returns a refference to this placeholder to next step.
+		.append("div") //return the reference to the element to next step
+		.text(function(d){return d;})
+		.attr("class", "bar")
+		.style("background-color", 
+			function(d){
+				return "rgb("+ (d*3)%255 + ", "+ (d*4)%255 + "," + (d*10)%255 + ")"
+			})
+		.style("width", function(d){
+			return d*5 + "px";
+		})
+		
+		// .style("color", 
+		// 	function(d){
+		// 		return "rgb("+ (d*3)%255 + ", "+ (d*4)%255 + "," + (d*10)%255 + ")"
+		// 	})
+		//同时这个data会被绑定在这个element里面： __data__
+	</script>
 </body>
 </html>
