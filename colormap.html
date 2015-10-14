@@ -34,6 +34,14 @@
 		.style("width", function(d){
 			return d*5 + "px";
 		})
+
+		recolor = function(){
+			d3.select(this)
+			  .transition()
+			  .duration(3000)
+			  .attr("fill", "hsl(" + (Math.random() * 360) + ",100%,50%)")
+			  .each("end", recolor)
+		}
 		
 		// .style("color", 
 		// 	function(d){
